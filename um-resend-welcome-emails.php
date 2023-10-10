@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Ultimate Member - Resend Welcome emails
  * Description:     Extension to Ultimate Member for resending the Welcome and Account Approved emails from UM Action dropdown in WP All Users page.
- * Version:         1.0.0 
+ * Version:         1.1.0 
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v3 or later
@@ -26,6 +26,8 @@ class UM_Resend_Welcome_Emails {
         add_action( 'um_admin_custom_hook_um_approved', array( $this, 'um_admin_custom_hook_um_approved' ), 10, 1 );
         add_filter( 'um_email_send_subject',            array( $this, 'um_email_resend_subject' ) , 10, 2 );
         add_filter( 'um_settings_structure',            array( $this, 'um_settings_structure_resend_emails' ), 10, 1 );
+        add_filter( 'um_template_tags_patterns_hook',   array( $this, 'my_template_tags_patterns' ), 10, 1 );
+        add_filter( 'um_template_tags_replaces_hook',   array( $this, 'my_template_tags_replaces' ), 10, 1 );
     }
 
     public function um_email_resend_subject( $subject, $template ) {
@@ -55,6 +57,18 @@ class UM_Resend_Welcome_Emails {
 
         $this->resend = true;
         UM()->mail()->send( um_user( 'user_email' ), 'approved_email' );
+    }
+
+    public function my_template_tags_patterns( $search ) {
+
+	    $search[] = '{password_reset_link}';
+	    return $search;
+    }
+
+    public function my_template_tags_replaces( $replace ) {
+
+	    $replace[] = um_user( 'password_reset_link' );
+	    return $replace;
     }
 
     public function um_settings_structure_resend_emails( $settings ) {
