@@ -1,8 +1,7 @@
 # UM Resend Welcome and Approval emails
 Extension to Ultimate Member for resending the Welcome and Account Approved emails from UM Action dropdown (UM 2.8.6-) and WP Bulk actions (UM 2.8.7+) in WP All Users page.
 
-## Settings
-UM Settings -> Email
+## UM Settings -> Email
 1. Resend Welcome emails - Subject pre-text - Subject pre-text for resending of the Welcome and Approval emails
 2. WP All Users - UM 2.8.6- -> Resend Welcome email/Resend Approved email ( Image at https://imgur.com/a/lowl671 )
 3. WP All Users - UM 2.8.7+ -> Resend Welcome email/Resend Approved email ( Image at https://imgur.com/6gwB2Lo )
