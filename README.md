@@ -4,7 +4,8 @@ Extension to Ultimate Member for resending the Welcome and Account Approved emai
 ## Settings
 UM Settings -> Email
 1. Resend Welcome emails - Subject pre-text - Subject pre-text for resending of the Welcome and Approval emails
-2. WP All Users -> Resend Welcome email/Resend Approved email ( Image at https://imgur.com/a/lowl671 )
+2. WP All Users - UM 2.8.6- -> Resend Welcome email/Resend Approved email ( Image at https://imgur.com/a/lowl671 )
+3. WP All Users - UM 2.8.7+ -> Resend Welcome email/Resend Approved email ( Image at https://imgur.com/Tezzvcl )
 
 ## Updates
 1. Version 1.1.0 Addition of {password_reset_link} email placeholder
