@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:     Ultimate Member - Resend Welcome and Approval emails
- * Description:     Extension to Ultimate Member for resending the Welcome and Account Approved emails from UM Action dropdown in WP All Users page.
- * Version:         1.2.0 
+ * Description:     Extension to Ultimate Member for resending the Welcome and Account Approved emails from UM Action/WP Bulk actions dropdown in WP All Users page.
+ * Version:         1.2.1 
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v3 or later
@@ -12,7 +12,7 @@
  * Update URI:      https://github.com/MissVeronica/um-resend-welcome-emails
  * Text Domain:     ultimate-member
  * Domain Path:     /languages
- * UM version:      2.8.7
+ * UM version:      2.9.2
  */
 if ( ! defined( 'ABSPATH' ) ) exit; 
 if ( ! class_exists( 'UM' ) ) return;
@@ -25,7 +25,8 @@ class UM_Resend_Welcome_Emails {
 
     function __construct( ) {
 
-        if ( version_compare( ultimatemember_version, '2.8.7' ) == -1 ) {
+
+        if ( defined( 'ultimatemember_version' ) && version_compare( ultimatemember_version, '2.8.7' ) == -1 ) {
 
             add_filter( 'um_admin_bulk_user_actions_hook',         array( $this, 'um_admin_bulk_user_actions_resend_welcome_286' ), 10, 1 );
             add_action( 'um_admin_custom_hook_um_welcome_resend',  array( $this, 'um_admin_custom_hook_um_welcome' ), 10, 1 );
@@ -35,7 +36,7 @@ class UM_Resend_Welcome_Emails {
 
             add_filter( 'bulk_actions-users',                      array( $this, 'um_admin_bulk_user_actions_resend_welcome_287' ), 10, 1 );
 
-            if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], $this->actions_list )) {
+            if ( isset( $_REQUEST['action'] ) && in_array( sanitize_text_field( $_REQUEST['action'] ), $this->actions_list )) {
 
                 add_filter( 'handle_bulk_actions-users',           array( $this, 'um_admin_custom_hook_handle' ), 10, 3 );
             }
@@ -156,17 +157,29 @@ class UM_Resend_Welcome_Emails {
             wp_safe_redirect( $url );
             exit;
         }
+
+        $url = add_query_arg(
+            array(
+                    'action'         => $current_action,
+                    '_wpnonce'       => wp_create_nonce( $current_action ),
+            ),
+            admin_url( 'users.php' )
+        );
+
+        return $url;
     }
 
     public function um_admin_custom_hook_um_welcome( $user_id ) {
 
         $this->resend = true;
+        um_fetch_user( $user_id );
         UM()->mail()->send( um_user( 'user_email' ), 'welcome_email' );
     }
 
     public function um_admin_custom_hook_um_approved( $user_id ) {
 
         $this->resend = true;
+        um_fetch_user( $user_id );
         UM()->mail()->send( um_user( 'user_email' ), 'approved_email' );
     }
 
@@ -197,3 +210,4 @@ class UM_Resend_Welcome_Emails {
 }
 
 new UM_Resend_Welcome_Emails();
+
