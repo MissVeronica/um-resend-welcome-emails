@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Ultimate Member - Resend Welcome and Approval emails
  * Description:     Extension to Ultimate Member for resending the Welcome and Account Approved emails from UM Action/WP Bulk actions dropdown in WP All Users page.
- * Version:         1.2.1 
+ * Version:         1.2.2 
  * Requires PHP:    7.4
  * Author:          Miss Veronica
  * License:         GPL v3 or later
@@ -12,7 +12,7 @@
  * Update URI:      https://github.com/MissVeronica/um-resend-welcome-emails
  * Text Domain:     ultimate-member
  * Domain Path:     /languages
- * UM version:      2.9.2
+ * UM version:      2.10.5
  */
 if ( ! defined( 'ABSPATH' ) ) exit; 
 if ( ! class_exists( 'UM' ) ) return;
@@ -191,7 +191,9 @@ class UM_Resend_Welcome_Emails {
 
     public function my_template_tags_replaces( $replace ) {
 
-	    $replace[] = um_user( 'password_reset_link' );
+	    //$replace[] = um_user( 'password_reset_link' );
+        $user_id = um_user( 'ID' );
+        $replace[] = UM()->password()->reset_url( $user_id );
 	    return $replace;
     }
 
@@ -210,4 +212,5 @@ class UM_Resend_Welcome_Emails {
 }
 
 new UM_Resend_Welcome_Emails();
+
 
