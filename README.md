@@ -10,6 +10,7 @@ Extension to Ultimate Member for resending the Welcome and Account Approved emai
 1. Version 1.1.0 Addition of {password_reset_link} email placeholder
 2. Version 1.2.0 Support for UM 2.8.7/2.8.8 with the new WP All Users UI
 3. Version 1.2.1 Code improvements with email address
+4. Version 1.2.2 Update for UM 2.10.5
 
 ## Installation & Updates
 Download the zip file from the green button and upload the zip file and install or update as a new WP Plugin, activate the plugin.
